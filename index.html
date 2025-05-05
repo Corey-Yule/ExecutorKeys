@@ -8,28 +8,18 @@
   <h1>Here is your key:</h1>
   <pre id="key">Loading...</pre>
 
-<script>
-  async function sha256(str) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(str);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
-  }
-
-  fetch('https://raw.githubusercontent.com/Corey-Yule/ExecutorKeys/PortFolio/keys')
-    .then(response => response.text())
-    .then(async data => {
-      const keys = data.trim().split('\n');
-      const randomKey = keys[Math.floor(Math.random() * keys.length)];
-      const hashedKey = await sha256(randomKey);
-      document.getElementById('key').textContent = hashedKey;
-    })
-    .catch(err => {
-      document.getElementById('key').textContent = 'Error fetching keys.';
-      console.error(err);
-    });
-</script>
+  <script>
+    fetch('https://raw.githubusercontent.com/Corey-Yule/ExecutorKeys/PortFolio/keys')
+      .then(response => response.text())
+      .then(data => {
+        const keys = data.trim().split('\n');
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        document.getElementById('key').textContent = randomKey;
+      })
+      .catch(err => {
+        document.getElementById('key').textContent = 'Error fetching keys.';
+        console.error(err);
+      });
+  </script>
 </body>
 </html>
