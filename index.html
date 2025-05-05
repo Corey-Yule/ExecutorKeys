@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Access Key</title>
+  <title>Your Access Keys</title>
 </head>
 <body>
-  <h1>Here is your key:</h1>
+  <h1>Here are your keys:</h1>
   <pre id="key">Loading...</pre>
 
   <script>
@@ -13,8 +13,16 @@
       .then(response => response.text())
       .then(data => {
         const keys = data.trim().split('\n');
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        document.getElementById('key').textContent = randomKey;
+
+        // Shuffle the array
+        for (let i = keys.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [keys[i], keys[j]] = [keys[j], keys[i]];
+        }
+
+        // Choose the first 3 shuffled keys
+        const selectedKeys = keys.slice(0, 3);
+        document.getElementById('key').textContent = selectedKeys.join('\n');
       })
       .catch(err => {
         document.getElementById('key').textContent = 'Error fetching keys.';
