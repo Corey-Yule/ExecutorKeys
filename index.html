@@ -12,15 +12,15 @@
     fetch('https://raw.githubusercontent.com/Corey-Yule/ExecutorKeys/PortFolio/keys')
       .then(response => response.text())
       .then(data => {
-        const keys = data.trim().split('\n');
+        const keys = data.trim().split('\n');  // Split keys by new line
 
-        // Shuffle the array
+        // Shuffle the keys to randomize order
         for (let i = keys.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
-          [keys[i], keys[j]] = [keys[j], keys[i]];
+          [keys[i], keys[j]] = [keys[j], keys[i]]; // Swap
         }
 
-        // Choose the first 3 shuffled keys
+        // Choose the first 3 random keys (you can change this number)
         const selectedKeys = keys.slice(0, 3);
         document.getElementById('key').textContent = selectedKeys.join('\n');
       })
